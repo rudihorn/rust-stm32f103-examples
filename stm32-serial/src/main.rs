@@ -7,6 +7,10 @@ mod std_repl;
 mod interrupts;
 extern crate stm32;
 
+#[macro_export]
+macro_rules! nop {
+	() => (unsafe { asm!("NOP") })
+}
 
 fn init_clock() {
     use stm32::clock::*;
@@ -73,8 +77,19 @@ fn enable_uart() {
 }
 
 fn uart_tx(ch : u8) {
-    while stm32::USART_1().get_read_not_empty() {};
+    while !stm32::USART_1().get_transmit_empty() {};
     stm32::USART_1().send_data(ch);
+}
+
+fn print(s : &str) {
+    for a in s.chars() {
+        uart_tx(a as u8);
+    }
+}
+
+fn println(s : &str) {
+    print(s);
+    uart_tx('\n' as u8);
 }
 
 pub fn main() {
@@ -84,13 +99,14 @@ pub fn main() {
 
     enable_uart();
     
-    let s = "STM32 Serial App";
+    println("STM32 Serial App");
+    println("  - by Rudi Horn");
 
-    let mut v = 'A' as u8;
+    // let mut v = 'A' as u8;
     loop {
-        uart_tx(v);
-        /* v = v + 1;
-        if v > ('Z' as u8) { v = ('A' as u8); } */
+        /* uart_tx(v);
+        v = v + 1;
+        if v > ('Z' as u8) { v = ('A' as u8); }  */
     } 
 }
 
