@@ -1,0 +1,17 @@
+[package]
+name = "stm32-serial"
+version = "0.1.0"
+authors = ["Rudi Horn <dyn-git@rudi-horn.de>"]
+
+[dependencies]
+volatile = "0.2.3"
+
+[profile.dev]
+lto = true
+panic = "abort"
+
+[profile.release]
+lto = true
+panic = "abort"
+
+
