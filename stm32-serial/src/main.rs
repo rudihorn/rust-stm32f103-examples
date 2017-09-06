@@ -5,7 +5,7 @@
 
 mod std_repl;
 mod interrupts;
-mod stm32;
+extern crate stm32;
 
 
 fn init_clock() {
