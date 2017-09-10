@@ -1,0 +1,20 @@
+[package]
+name = "stm32-mem"
+version = "0.1.0"
+authors = ["Rudi Horn"]
+
+[dependencies]
+volatile = "0.2.3"
+
+[profile.dev]
+lto = true
+panic = "abort"
+
+[profile.release]
+lto = true
+panic = "abort"
+
+[dependencies.stm32]
+git = "https://github.com/rudihorn/rust-stm32f103.git"
+
+

@@ -14,7 +14,7 @@ SECTIONS
     LONG(__StackTop);
     KEEP(*(.ivtable));
 
-	. = 0xD8;
+	. = 0x144;
 
     *(.text*)
   } > FLASH
